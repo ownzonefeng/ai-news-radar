@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+node_modules/
+frontend/dist/
+data/
+.env
+*.db
+*.pem
+github_ed25519
+github_ed25519.pub
+*.key

@@ -1,0 +1,52 @@
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: ai-news-mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_pass_change_me
+      - MYSQL_DATABASE=ai_news
+      - MYSQL_USER=ainews
+      - MYSQL_PASSWORD=ainews_pass
+    volumes:
+      - /opt/ai-news/mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot_pass_change_me"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  ai-news:
+    build: .
+    container_name: ai-news
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=ainews
+      - MYSQL_PASSWORD=ainews_pass
+      - MYSQL_DB=ai_news
+    volumes:
+      - ./data:/data
+      - ./certs:/certs:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: >-
+      uvicorn app.main:app
+      --host 0.0.0.0
+      --port 443
+      --ssl-certfile /certs/cert.pem
+      --ssl-keyfile /certs/key.pem
+      --app-dir backend
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,ssl; ctx=ssl._create_unverified_context(); urllib.request.urlopen('https://127.0.0.1:443/api/health',context=ctx)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
