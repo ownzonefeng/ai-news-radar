@@ -1,4 +1,4 @@
-import { Moon, Radar, RefreshCw, Sun, Users } from "lucide-react";
+import { Github, Moon, Radar, RefreshCw, Sun, Users } from "lucide-react";
 import { formatFullTime } from "../lib.js";
 
 export default function Header({ dark, onToggleTheme, updatedAt, visitors }) {
@@ -34,6 +34,15 @@ export default function Header({ dark, onToggleTheme, updatedAt, visitors }) {
           >
             {dark ? <Sun size={15} /> : <Moon size={15} />}
           </button>
+          <a
+            href="https://github.com/ownzonefeng/ai-news-radar"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub repository"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 text-zinc-500 transition hover:border-zinc-300 hover:text-zinc-700 dark:border-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+          >
+            <Github size={15} />
+          </a>
         </div>
       </div>
     </header>

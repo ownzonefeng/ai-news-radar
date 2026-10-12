@@ -133,6 +133,20 @@ export default function App() {
       </main>
       <footer className="border-t border-zinc-200 py-6 text-center text-xs text-zinc-400 dark:border-zinc-800 dark:text-zinc-600">
         © 2026 AI News Radar · wefeng486@gmail.com
+        <div className="mt-1 flex items-center justify-center gap-1.5">
+          <a
+            href="https://github.com/ownzonefeng/ai-news-radar"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-zinc-300 underline-offset-2 transition hover:text-zinc-600 dark:hover:text-zinc-300"
+          >
+            开源仓库
+          </a>
+          <span>·</span>
+          <span>MIT License</span>
+          <span>·</span>
+          <span>本项目由 Codex 辅助生成</span>
+        </div>
       </footer>
     </div>
   );
